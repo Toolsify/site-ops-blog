@@ -2,12 +2,12 @@
 export async function getStaticPaths() {
   const modules = import.meta.glob('../../content/posts/**/*.md', { eager: true });
   return Object.entries(modules).map(([file, mod]) => {
-    const slug = file
+    const slugParts = file
       .replace('../../content/posts/', '')
       .replace(/\.md$/, '')
       .split('/');
     return {
-      params: { slug },
+      params: { slug: slugParts.join('/') },
       props: { Content: mod.default, frontmatter: mod.frontmatter ?? {} },
     };
   });
