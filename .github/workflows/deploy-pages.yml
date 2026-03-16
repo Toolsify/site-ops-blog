@@ -3,6 +3,7 @@ name: Deploy Preview Pages
 on:
   push:
     branches:
+      - master
       - main
       - 'preview/**'
   workflow_dispatch:
