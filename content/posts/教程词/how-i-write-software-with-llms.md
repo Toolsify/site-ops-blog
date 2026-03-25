@@ -3,79 +3,75 @@ title: "How I Write Software With Llms"
 slug: how-i-write-software-with-llms
 keyword: "how i write software with llms"
 keyword_type: 教程词
-created_at: 2026-03-16T22:06:15.166680+00:00
+created_at: 2026-03-25T13:06:06.732046+00:00
 reference_links:
   - https://www.stavros.io/posts/how-i-write-software-with-llms/
 ---
 
-When people ask me about **how i write software with llms**, the most useful answer is not “I prompt better.” It is that I treat LLMs less like magic autocomplete and more like a structured software team. That framing comes through clearly in Stavros’s March 10, 2026 post, “[How I write software with LLMs](https://www.stavros.io/posts/how-i-write-software-with-llms/),” which is valuable because it stays close to actual delivery work: planning, implementation, review, and failure modes.
+If you want a concrete answer to how i write software with llms, the most useful starting point is not prompt trickery. It is workflow design.
 
-What makes the piece worth revisiting is that it does not argue that coding skill is obsolete. Instead, it argues that the center of gravity has moved. The human contribution is no longer “type every line by hand,” but “shape architecture, define constraints, and reject bad decisions before they harden into the codebase.” That is the most practical starting point for anyone looking for an **llm software development guide** instead of another abstract debate about whether LLMs are good or bad.
+That is what makes Stavros’ March 10, 2026 post interesting. He does not present LLMs as magical replacements for software judgment. He presents them as collaborators inside a structured process: one model helps shape architecture, another implements, and separate models review. The result, in his telling, is not less ownership over the codebase. It is a shift in where ownership matters most.
 
 ## Background
 
-The source article opens with a blunt claim: the author does not care about the joy of programming for its own sake, but about making things. LLMs matter because they reduce the distance between an idea and working software. In that account, recent model quality made a real difference. Stavros says earlier generations of models still required line-by-line checking, then function-level checking, while the current generation has pushed his supervision upward toward architecture and planning.
+The post begins with a blunt premise: the author cares more about making things than about the act of programming itself. LLMs matter to him because they make building feel fast and open-ended again. That framing is important, because it changes the question from “Can an LLM code?” to “How do I organize software work so the model helps without taking the project off the rails?”
 
-That shift is important because it explains why some developers get good outcomes and others get chaos. If you use an LLM as a faster typist, you may get faster code but also faster mistakes. If you use it inside a disciplined workflow, the model becomes an amplifier for decisions you already understand. In the post, that distinction is tied directly to domain familiarity: projects in familiar stacks hold together, while projects in unfamiliar technologies can still turn into a mess of compounding bad choices.
+He argues that recent models changed the practical ceiling. Earlier generations required close inspection at the line level, then at the function level. In his view, newer models are good enough that the human role has moved upward, toward architecture, tradeoffs, and usability. That does not mean expertise is optional. In fact, the post says the opposite: when he knows the underlying technology well, the code stays maintainable for weeks and grows into large real projects. When he does not, the project degrades quickly because bad decisions compound.
 
-The article also grounds this in real projects rather than toy scripts. Stavros describes building an assistant, a voice-note device, an art clock, and an infinite multiplayer canvas with LLM support. Whether or not a reader would build the same things, the point is concrete: this is not a workflow meant only for demo apps. It is a way to manage real software work while staying close to how the system is put together.
+That distinction gives the article its backbone. The workflow is not “tell the model to build everything.” It is “keep the human at the level where mistakes are most expensive.”
+
+He also makes a point of listing real projects built this way rather than toy examples. They include Stavrobot, a security-focused personal assistant; Middle, a voice-note pendant that transcribes and forwards audio; Sleight of hand, an intentionally unsettling wall clock; and Pine Town, an infinite multiplayer drawing meadow. Whether or not a reader would build those exact things, the examples do useful work: they show that the workflow is meant for maintained software, not one-off demos.
 
 ## Why this matters
 
-The biggest lesson in **how to use llms for coding** is not speed. It is defect control. Stavros explicitly says the appeal is a low defect rate without losing understanding of the whole system. That matters more than raw output volume, because large codebases do not fail when a model writes too slowly. They fail when every new change drifts further away from coherent architecture.
+The most valuable idea in the article is that LLM-assisted development is not one skill. It is several skills, and they map to different stages of software work.
 
-This is also why the article is more useful than generic “AI coding tips.” It makes a falsifiable claim about where human skill still matters. The author argues that engineering skill has not disappeared; it has moved toward architecture, system boundaries, and product judgment. In other words, the human still owns the shape of the software, even when the model produces most of the text.
+The author’s claim is not simply that models write code faster. It is that they reduce defects when used inside a system that separates planning, implementation, and review. He says he can still understand the whole system while letting models produce large amounts of code. That is a meaningful middle ground between two weak positions: writing everything manually out of principle, or delegating everything and hoping the result holds together.
 
-For a developer reading in 2026, that is a practical reframing. The best **developer llm workflow 2026** is probably not a single super-prompt or one favorite model. It is a repeatable system that separates planning from implementation and implementation from review. Once you see that, many day-to-day frustrations with LLM coding start to make sense. If the same model plans, writes, and approves its own work, you are effectively asking one mind to challenge itself. The source article argues that this is weak review, and the logic holds.
+This matters because many teams get stuck on the wrong debate. They argue about whether LLMs are “good” or “bad” at coding in the abstract. The post is more practical. It suggests that output quality depends heavily on how the work is partitioned. If one model plans and the same model reviews its own work, you are not really reviewing anything. If a cheaper model gets a precise plan with little room for architectural improvisation, it can still be effective at implementation. If different models critique the diff independently, you get more varied feedback.
+
+There is also a quieter point here about cost and leverage. Stavros uses a strong model for reasoning-heavy planning and a cheaper model for code generation. That is not only a budget optimization. It reflects a belief that planning errors are more expensive than implementation errors. For software development, that is often true.
 
 ## What to pay attention to
 
-The harness matters more than many people admit. In the source post, Stavros says his setup needs two things: access to multiple models from different companies, and custom agents that can call each other. That is not a minor tooling preference. It is the foundation of the workflow.
+The harness comes first. In the post, the tooling itself has to support two capabilities: multiple models from different companies, and agents that can call each other. Everything else is secondary. That is a sharp filter, and it explains why he prefers a harness like OpenCode rather than a single-vendor environment. The reason is straightforward: reviews are better when another model, with different biases and strengths, inspects the work.
 
-The multiple-model point is especially strong. He compares one model reviewing its own work to a person agreeing with themselves, which is a memorable way to explain why single-model workflows plateau. Different models have different strengths, and in his experience they catch different issues. The exact model rankings may change quickly, but the underlying pattern is stable: independent review improves quality.
+From there, the workflow is split into three roles.
 
-The second point is separation of roles. The article describes three agent types: architect, developer, and reviewers. The architect is the only one the human talks to directly. That agent handles the long back-and-forth needed to clarify goals, tradeoffs, and architecture. The developer then implements a detailed plan with less freedom to improvise. Reviewers examine the plan and diff independently, and disagreements can be escalated back upward.
+The architect is the only agent the author talks to directly. This model needs to be strong, because its job is not to autocomplete code but to reason through goals, constraints, and tradeoffs. He describes spending significant time in back-and-forth discussion, sometimes up to half an hour, until the plan is specific at the level of files and functions. He also imposes a simple but revealing control: the architect should not start implementation until he explicitly says “approved.” That tells you something about the failure mode he is guarding against. The danger is not only wrong code. It is premature confidence.
 
-That role separation is one of the strongest **llm programming workflow best practices** in the article, because it narrows where mistakes are allowed to happen. High-level choices are made in a slow, human-guided phase. Low-level changes are delegated. Review is independent. The system is designed to reduce hidden drift.
+The developer can be weaker and cheaper because the plan has already narrowed the problem. Its job is to implement, not redesign. Then reviewers inspect the plan and diff independently. He says he always includes Codex as a reviewer, sometimes Gemini, and for important work also Opus. The architect then decides which review comments are worth acting on.
 
-## llm software development guide
+What I find most useful is the author’s definition of human ownership. He says he often redirects the model toward patterns already present in the codebase, because the model suggests ideas that might be reasonable elsewhere but are wrong for this project. That is exactly the kind of intervention that tends to keep a codebase coherent over time.
 
-If I were turning the source article into a compact workflow, I would describe it like this.
-
-Start with a planning conversation, not a coding request. In the source, the architect phase can take up to half an hour of back-and-forth on one feature or bugfix. The goal is not to “prompt better.” The goal is to force clarity: what problem is being solved, what tradeoffs are acceptable, which parts of the codebase should change, and what should explicitly be left out.
-
-Next, require a low-level plan before implementation begins. Stavros says the approved plan reaches the level of files and functions. That matters because it reduces the developer agent’s ability to make accidental architectural choices. A vague prompt invites the model to improvise. A detailed plan tells it where improvisation is not welcome.
-
-Then separate implementation from review. In the post, the developer can be a weaker, cheaper model because the hard thinking happened earlier. Reviewers then inspect the result against both the diff and the plan. This is where multi-model diversity becomes useful: one model may be pedantic, another may surface alternatives, another may be better at judging which feedback is worth acting on.
-
-Finally, watch for the main failure mode. Stavros describes a familiar pattern: when he is not strong enough in the underlying technology, the LLM makes bad choices early, then keeps building on them until the code becomes tangled and repeated fixes make things worse. That is a critical warning for anyone searching **how i write software with llms** and hoping for a universal recipe. LLMs do not remove the need to understand the stack. They can hide your blind spots until the cost is much higher.
-
-The annotated email-support example in the source makes this concrete. The session starts with a broad idea, then the model asks focused design questions about inbound email, outbound transport, threading, HTML parsing, attachments, webhook authentication, and architecture. That exchange is useful because it shows the model contributing structure, while the human still chooses direction. That is the right balance.
+The real-session example at the end makes the workflow less abstract. When adding email support to Stavrobot, the initial exchange is not a code dump. It is design clarification: inbound path, outbound path, use case, architecture, HTML handling, thread tracking, and attachments. The proposed plan then gets concrete quickly: use a webhook, parse raw email server-side with `mailparser`, send outbound mail through SMTP with `nodemailer`, add webhook authentication, require a subject line, and explicitly skip features like email threading and bounce handling for now. That last part matters too. Good LLM use is not just expansion. It is controlled scope.
 
 ## FAQ
 
-### Do I need to be a strong programmer to use this workflow?
+### Is this article saying I can stop understanding code if I use LLMs?
 
-You still need technical judgment. The source article argues that the human role has moved upward, not disappeared. If you cannot recognize bad architecture, unfamiliar stack risks, or poor tradeoffs, the LLM can lead you into a mess faster.
+No. The source argues almost the reverse. The author says his software holds up when he understands the technology and can steer architecture. When he does not, bad choices pile up and the project becomes harder to recover. The practical lesson is that LLMs reduce some kinds of manual effort, but they increase the value of system-level judgment.
 
-### Is one model enough for serious LLM coding?
+### Why not just use one strong model for everything?
 
-The source strongly suggests no. Stavros’s setup depends on multiple models because independent review catches issues a single model is likely to miss. Even if your exact toolchain differs, the review principle is sound.
+Because the post treats review as a genuine second opinion. A model reviewing its own work tends to share the same assumptions. Using separate models for planning, implementation, and review creates useful disagreement. It also lets you reserve the most expensive model for the stage where reasoning quality matters most.
 
-### What is the biggest mistake in LLM software development?
+### What should I copy first from this workflow?
 
-Starting implementation before the plan is sharp enough. In the source workflow, the architect does not begin coding until the human explicitly approves the plan. That slows the front of the process down, but it protects the rest of the project.
+Start with the role split, not the exact tools. You do not need the same harness or model mix to learn from the pattern. One agent should help define the plan. Another should implement against that plan. At least one separate reviewer should inspect the diff. If you skip that structure, you lose much of what makes this approach reliable.
 
-### Can this work for unfamiliar technologies?
+### What is the biggest risk in how i write software with llms?
 
-Only with caution. The article says unfamiliar stacks are where bad decisions pile up. You can still use LLMs there, but you should expect more planning, more verification, and less confidence in early architectural choices.
+The failure mode described in the source is architectural drift in technologies you do not understand well enough. If the model makes an early poor decision and you do not catch it, later changes stack on top of that weakness. Eventually the system gets tangled, and each attempted fix makes things worse. That is why planning and review carry so much weight in the article.
 
 ## What to watch next
 
-The most interesting open question is not whether models will improve. They will. The real question is which parts of this workflow remain durable as model quality rises. The source article already traces a movement from line-level supervision to architecture-level supervision. If that trend continues, the human bottleneck may keep moving upward.
+The most interesting open question is not whether models will improve. They obviously will. The more interesting question is which parts of this workflow will remain human-led.
 
-Still, some parts look durable even if models get much better. Independent review is likely to remain useful. Explicit planning is likely to remain useful. Human ownership of tradeoffs is likely to remain useful. Software fails in context-specific ways, and context is where humans still have the clearest advantage.
+In the post, the author notes that the review burden has already moved upward over time, from lines to functions to architecture. If that trend continues, the boundary may shift again. But even inside his optimistic framing, one thing is stable: software still needs someone to decide what tradeoffs are acceptable, what fits the codebase, and when a suggestion is technically correct but strategically wrong.
+
+That is also why the article feels more durable than a list of prompt tips. Specific models will change. Harnesses will change. The need for scoped plans, independent review, and active human steering probably will not.
 
 ## Final takeaway
 
-The best answer to **how i write software with llms** is not “I let the model code for me.” It is “I use LLMs inside a workflow that preserves architectural control.” Stavros’s article is useful because it shows that quality comes from structure: one agent plans with you, another implements, others review, and you stay responsible for the decisions that shape the system. If you want an **llm software development guide** that holds up in real projects, start there.
+The clearest lesson from this source is that how i write software with llms is really a question about operating model, not just model quality. Stavros’ workflow works because it separates architecture, implementation, and review, uses different models for different jobs, and keeps the human responsible for the decisions that shape the system. If you want more reliable LLM-assisted software development, that is the thread worth following.
