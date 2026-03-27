@@ -1,0 +1,19 @@
+---
+const title = 'Site Ops Blog';
+const modules = import.meta.glob('../../content/posts/**/*.md', { eager: true });
+const posts = Object.entries(modules).map(([file, mod]) => ({
+  file,
+  frontmatter: mod.frontmatter ?? {},
+}));
+---
+<html lang="zh-CN">
+  <head><meta charset="utf-8" /><title>{title}</title></head>
+  <body>
+    <main>
+      <h1>{title}</h1>
+      <ul>
+        {posts.map((post) => <li>{post.frontmatter.title ?? post.file}</li>)}
+      </ul>
+    </main>
+  </body>
+</html>
