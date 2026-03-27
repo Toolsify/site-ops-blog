@@ -13,7 +13,7 @@ export async function getStaticPaths() {
   });
 }
 const { Content, frontmatter } = Astro.props;
-const basePath = Astro.site ? Astro.site.pathname.replace(/\/$/, '') : '';
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <html lang="zh-CN">
   <head>
