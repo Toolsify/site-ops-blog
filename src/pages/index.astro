@@ -1,9 +1,10 @@
 ---
 const title = 'Site Ops Blog';
+const basePath = Astro.site ? Astro.site.pathname.replace(/\/$/, '') : '';
 const modules = import.meta.glob('../../content/posts/**/*.md', { eager: true });
 const posts = Object.entries(modules).map(([file, mod]) => ({
   file,
-  href: `/${file
+  href: `${basePath}/${file
     .replace('../../content/posts/', '')
     .replace(/\.md$/, '')}`,
   frontmatter: mod.frontmatter ?? {},

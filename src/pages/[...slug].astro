@@ -13,6 +13,7 @@ export async function getStaticPaths() {
   });
 }
 const { Content, frontmatter } = Astro.props;
+const basePath = Astro.site ? Astro.site.pathname.replace(/\/$/, '') : '';
 ---
 <html lang="zh-CN">
   <head>
@@ -143,7 +144,7 @@ const { Content, frontmatter } = Astro.props;
   </head>
   <body>
     <main>
-      <a class="back-link" href="/">返回首页</a>
+      <a class="back-link" href={`${basePath}/`}>返回首页</a>
       <article>
         <Content />
       </article>
